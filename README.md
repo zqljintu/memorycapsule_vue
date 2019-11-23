@@ -1,5 +1,7 @@
 # memorycapsule_vue
 
+This is a web client for memorycapsule developed with Vue.//这是一个用Vue写的记忆胶囊Web客户端。 
+
 > A Vue.js project
 
 ## Build Setup
