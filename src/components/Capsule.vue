@@ -82,6 +82,7 @@
 			  this.islogin = this.$cookies.isKey('capsule_username');
 			  if(this.islogin){
 				  this.username = this.$cookies.get('capsule_username');
+				  this.$store
 				  this.showCapsules();
 				  console.log('zzzzzisLogin',this.username);
 			  }

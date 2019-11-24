@@ -133,7 +133,7 @@
 			setCapsuleCookie: function(sex){
 				this.$cookies.set('capsule_username',this.username,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_password',this.userpassword,60 * 60 *60 *24 *15);
-				this.$cookies.set('capsule_usersex',sex,60 *60 *24 *15);
+				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
 			},
 			clearCapsuleCookie:function(){
 				this.$cookies.remove('capsule_username');
@@ -219,7 +219,7 @@
 		//background: #1256df
 	}
 	.button_logout{
-		background: palevioletred
+		background: #1DB0B8
 	}
 	
 </style>

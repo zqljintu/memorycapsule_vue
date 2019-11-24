@@ -1,8 +1,10 @@
 <template>
 	<dev class = "div_item">
-		<div id="div_item_right">
+		<div id="div_item_left">
 			<div id ="div_item_type">
-				{{item.fields.capsule_type}}
+				<h5 class="h_type">
+				   {{item.fields.capsule_type}}
+				</h5>
 			</div>
 			<div id ="div_item_content">
 				{{showContent(item.fields.capsule_content)}}
@@ -50,54 +52,51 @@
 	.div_item{
 		width: 100%;
 		margin-bottom: 10px;
-		min-height: 80px;
-		//max-height: 200px;
+		min-height: 70px;
 		color: #000000;
 		background: #F8F2DC;
 		display: -webkit-box;
 	}
-	#div_item_type_image{
-		width: 10%;
-		//background: blue;
+	#div_item_left{
+		background:pink;
+		width: 90%;
+		position: relative;
+
+	}
+	#div_item_type{
+		display: flex;
+        //justify-content: center;
+        //align-items: center;
+		font-size: 20px;
+	}
+	.h_type{
+		text-align: left;
+		margin: 0px;
+		padding: 0px;
 	}
 	#div_item_content{
-		min-height: 50px;
-		//background: brown;
+		min-height: 40px;
+		background: brown;
 		text-align:	left;
 		text-indent: 20px;
 		font-size: 16px;
 		overflow-wrap: break-word;
 		margin: 10px;
 	}
-	#div_item_type{
-		//background: green;
-		display: flex;
-        justify-content: center;
-        align-items: center;
-		font-size: 20px;
+	#div_item_time{
+		margin-top: 10px;
+		bottom: 10px;
+		background: yellow;
 	}
-	#div_item_right{
-		//background:pink;
-		width: 90%;
-		//position: relative;
-
-	}
-	#div_img_type{
-		background: gray;
-		float: right;
+	#div_item_type_image{
 		width: 10%;
+		background: blue;
 	}
 	#image_type{
 		width: 100%;
 		max-width: 50px;
 		height: 100%;
-		margin-top: 20px;
-	}
-	#div_item_time{
-		//position: absolute;
-		margin-top: 10px;
-		bottom: 10px;
-		//background: yellow;
+		margin-top: 5px;
 	}
 
 </style>

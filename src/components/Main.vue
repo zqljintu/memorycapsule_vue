@@ -32,6 +32,7 @@
 		data(){
 			return{
 				selected:'capsule',
+				isLogin: false
 			}
 		},
 		components:{
@@ -46,7 +47,13 @@
 		},
 		mounted:function(){
 			  this.selected='capsule';
-    	}
+		},
+		beforeMount:function() {
+	          this.isLogin = this.$cookies.isKey('capsule_username');
+			  if (this.isLogin){
+				  	this.$store.commit('setIslogin',true);
+			  }
+		}
 	}
 	
 </script>
