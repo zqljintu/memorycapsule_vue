@@ -103,7 +103,7 @@
 					formData.append('password',this.userpassword);
 					console.log(this.username)
 					console.log(this.userpassword)
-				this.$http.post('http://127.0.0.1:8000/api/user_login', formData)
+				this.$http.post('/api/user_login', formData)
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
 			     	  console.log(res)

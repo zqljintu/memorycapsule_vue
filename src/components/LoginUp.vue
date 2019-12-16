@@ -152,7 +152,7 @@
 					formData.append('email',this.useremail);
 					formData.append('sex',this.usersex);
 					console.log(this.usersex);
-				this.$http.post('http://127.0.0.1:8000/api/user_loginup', formData)
+				this.$http.post('/api/user_loginup', formData)
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
 			     	  console.log(res)

@@ -61,10 +61,10 @@
                  }).catch((response)=>{
                     console.log(response)
                 })*/
-			   this.$http.get('http://127.0.0.1:8000/api/show_capsules?username=' + this.username)
+			   this.$http.get('/api/show_capsules?username=' + this.username)
 			    .then((response) => {
 			      var res = JSON.parse(response.bodyText)
-			      console.log(res)
+			      console.log(res)  
 			      if(res['error_name'] == 207){
 			        this.capsules = res['list']
 			      } else {

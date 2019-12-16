@@ -129,7 +129,7 @@
 				formData.append('capsule_person',this.capsule_person);
 				formData.append('capsule_image',this.capsule_image);
 
-				this.$http.post('http://127.0.0.1:8000/api/add_capsule', formData)
+				this.$http.post('/api/add_capsule', formData)
 		      	.then((response) => {
 					var res = JSON.parse(response.bodyText)
 			     	console.log(res)
