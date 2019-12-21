@@ -1,5 +1,5 @@
 <template>
-	<dev class = "div_item">
+	<div class = "div_item">
 		<div id="div_item_left">
 			<div id ="div_item_type">
 				<h5 class="h_type">
@@ -13,20 +13,33 @@
 				{{showTime(item.fields.capsule_create_time)}}
 			</div>
 		</div>
-		<div id ="div_item_type_image">
+		<div id ="div_item_type_image" >
 			<img id="image_type" slot="icon" src="../assets/icon_diary.png" v-if="item.fields.capsule_type == '日记'">
 			<img id="image_type" slot="icon" src="../assets/icon_live.png" v-else-if="item.fields.capsule_type == '生活'">
 			<img id="image_type" slot="icon" src="../assets/icon_study.png" v-else-if="item.fields.capsule_type == '学习'">
 			<img id="image_type" slot="icon" src="../assets/icon_travel.png" v-else-if="item.fields.capsule_type == '旅行'">
 			<img id="image_type" slot="icon" src="../assets/icon_work.png" v-else-if="item.fields.capsule_type ==='工作'">
 			<img id="image_type" slot="icon" src="../assets/icon_diary.png" v-else>
+			<img id="img_menu" slot="icon" src="../assets/menu.png" @click="showActionSheet">
 		</div>
-	</dev>
+		<mt-actionsheet
+        	:actions= "actionData"
+			 v-model="actionVisiable">
+		</mt-actionsheet>
+	</div>
 </template>
 <script type="text/javascript">
+    import {Actionsheet} from 'mint-ui'
 	export default{
 		data(){
 			return{
+				actionVisiable: false,
+				actionData: [
+					{name: '修改',
+					method: this.editCapsuleItem},
+					{name: '详情',
+					method: this.detailCapsuleItem},
+				]
 				/*item:{id:1,
 					  type:"旅行",
 					  content:"今天天气不错，非常适合出去游玩",
@@ -40,6 +53,15 @@
 			},
 			showContent: function(str){
 				return this.utils.cropTheCpasuleContent(str);
+			},
+			showActionSheet(){
+				this.actionVisiable = true
+			},
+			editCapsuleItem(){
+
+			},
+			detailCapsuleItem(){
+
 			}
 		},
 		mounted:function(){
@@ -65,8 +87,6 @@
 	}
 	#div_item_type{
 		display: flex;
-        //justify-content: center;
-        //align-items: center;
 		font-size: 20px;
 	}
 	.h_type{
@@ -91,12 +111,23 @@
 	#div_item_type_image{
 		width: 10%;
 		background: blue;
+		position: relative;
 	}
 	#image_type{
 		width: 100%;
 		max-width: 50px;
 		height: 100%;
 		margin-top: 5px;
+	}
+	#img_menu{
+		position: absolute;
+		width: 60%;
+		margin: 0 auto;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin-bottom: 15px;
+		background: orangered;
 	}
 
 </style>

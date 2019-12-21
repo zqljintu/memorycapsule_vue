@@ -173,7 +173,7 @@
 </script>
 <style lang="scss" type="text/css">
 	.div_main{
-		//background: pink;
+		background: pink;
 	}
 	.h_normal{
 		width: 50%;

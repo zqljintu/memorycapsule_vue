@@ -65,7 +65,7 @@
 </template>
 <script type="text/javascript">
 	import {Toast} from 'mint-ui';
-	import { Popup } from 'mint-ui';
+	import {Popup} from 'mint-ui';
 	export default{
 		data(){
 			return {
