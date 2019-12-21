@@ -61,7 +61,7 @@
                  }).catch((response)=>{
                     console.log(response)
                 })*/
-			   this.$http.get('/api/show_capsules?username=' + this.username)
+			   this.$http.get(this.utils.getUrl()+ '/api/show_capsules?username=' + this.username)
 			    .then((response) => {
 			      var res = JSON.parse(response.bodyText)
 			      console.log(res)  

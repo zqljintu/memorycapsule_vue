@@ -1,4 +1,5 @@
 export default class utils {
+  static debug = true
   /**
      * 判断字符串是否为空
      * @param str
@@ -75,4 +76,13 @@ export default class utils {
     }
     return str
   }
+
+  static getUrl(){
+    if (this.debug){
+      return "http://127.0.0.1:8000"
+    }
+    return ""
+  }
+
+
 }

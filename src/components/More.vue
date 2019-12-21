@@ -103,7 +103,7 @@
 					formData.append('password',this.userpassword);
 					console.log(this.username)
 					console.log(this.userpassword)
-				this.$http.post('/api/user_login', formData)
+				this.$http.post(this.utils.getUrl() + '/api/user_login', formData)
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
 			     	  console.log(res)
@@ -216,6 +216,7 @@
 		width: 50px;
 		height: 50px;
 		margin: 0px 0;
+		margin-top: 20px;
 		//background: #1256df
 	}
 	.button_logout{
