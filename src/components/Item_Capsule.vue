@@ -121,7 +121,7 @@
 	}
 	#img_menu{
 		position: absolute;
-		width: 60%;
+		width: 25px;
 		margin: 0 auto;
 		bottom: 0;
 		left: 0;

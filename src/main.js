@@ -20,7 +20,7 @@ Vue.use(Mint)
 Vue.use(ElementUI) // 全局使用ElenmentUI
 Vue.use(VueResource)
 Vue.use(VueCookies) // cookie方法
-Vue.prototype.utils = utils
+Vue.prototype.utils = utils//自定义的一些方法
 Vue.prototype.cookieutils = cookieutils
 Vue.prototype.$ajax = axios
 
@@ -28,7 +28,7 @@ Vue.prototype.$ajax = axios
 new Vue({
   el: '#app',
   router,
-  store,
+  store,//监听变化，相当于全局广播的作用
   components: { App },
   template: '<App/>'
 })

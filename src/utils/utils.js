@@ -84,5 +84,9 @@ export default class utils {
     return ""
   }
 
+  static getIsLogin(){
+    return this.$store.getters.getIsLogin
+  }
+
 
 }

@@ -7,6 +7,7 @@ import ItemCapsule from '@/components/Item_Capsule'
 import Add from '@/components/Add'
 import LoginUp from '@/components/LoginUp'
 import AddOther from '@/components/Add_Other'
+import ItemDetail from '@/components/Item_Detail'
 
 Vue.use(Router)
 
@@ -50,6 +51,11 @@ export default new Router({
       name: 'AddOther',
       path: '/AddOther',
       component: AddOther
+    },
+    {
+      name: 'ItemDetail',
+      path: '/ItemDetail',
+      component: ItemDetail
     }
   ]
 })
