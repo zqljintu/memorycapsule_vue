@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     islogin: false,
-    userName: ''
+    userName: '',
+    capsuleItem: ''
   },
 
   getters: {
@@ -15,6 +16,9 @@ export const store = new Vuex.Store({
     },
     getUsername: (state) => {
       return state.userName
+    },
+    getCapsuleitem: (state) => {
+      return state.capsuleItem
     }
   },
 
@@ -24,6 +28,9 @@ export const store = new Vuex.Store({
     },
     setUsername: (state, username) => {
       state.userName = username
+    },
+    setCapsuleItem: (state, item) => {
+      state.capsuleItem = item
     }
   },
 

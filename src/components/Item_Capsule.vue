@@ -39,6 +39,8 @@
 					method: this.editCapsuleItem},
 					{name: '详情',
 					method: this.detailCapsuleItem},
+					{name: '删除',
+					method: this.deleateCapauleItem},
 				]
 				/*item:{id:1,
 					  type:"旅行",
@@ -61,6 +63,11 @@
 
 			},
 			detailCapsuleItem(){
+				this.$store.commit('setCapsuleItem', this.item);
+				this.$router.push({
+              		name:'ItemDetail' });
+			},
+			deleateCapauleItem(){
 
 			}
 		},
