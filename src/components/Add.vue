@@ -63,7 +63,7 @@
 						clearable ></el-input>
 				</mt-tab-container-item>
 			</mt-tab-container>
-			<mt-button id="button_submint" type="button" size = "large" @click="submit($event)">提交</mt-button>
+			<mt-button id="button_submint"  size = "large" @click="submit($event)">提交</mt-button>
 		</form>
 	</div>
 </template>
@@ -135,7 +135,7 @@
 			     	console.log(res)
 					if(res['error_name'] == 206){
 			           Toast("提交成功");
-					   this.$emit('updateCapsules',this.update)
+					   //this.$emit('updateCapsules',this.update)
 					   this.back();
 			        }else{
 					   Toast("提交失败");

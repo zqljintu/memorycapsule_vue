@@ -29,7 +29,8 @@
 	</div>
 </template>
 <script type="text/javascript">
-    import {Actionsheet} from 'mint-ui'
+	import {Actionsheet} from 'mint-ui'
+	import {MessageBox} from 'mint-ui';
 	export default{
 		data(){
 			return{
@@ -40,7 +41,7 @@
 					{name: '详情',
 					method: this.detailCapsuleItem},
 					{name: '删除',
-					method: this.deleateCapauleItem},
+					method: this.showMessageBox},
 				]
 				/*item:{id:1,
 					  type:"旅行",
@@ -68,8 +69,47 @@
               		name:'ItemDetail' });
 			},
 			deleateCapauleItem(){
-
-			}
+				let formData = new FormData()
+				formData.append('username',this.item.fields.capsule_id);
+			    formData.append('capsulepk',this.item.pk);
+				this.$http.post(this.utils.getUrl() + '/api/delete_capsule', formData)
+						.then((response) => {
+								var res = JSON.parse(response.bodyText)
+								console.log(res)
+								if(res['error_name'] == 213){
+									console.log("删除成功")
+									this.$emit('updateCapsules')
+								}else if(res['error_name'] == 202){
+									console.log("没有该账号")
+								}else if(res['error_name'] == 214){
+									console.log("该条记录不是该用户创建")
+								}else if(res['error_name'] == 2111){
+									console.log("没有该记录")
+								}else{
+									console.log("删除失败")
+								}
+						},(response) => {
+							console.log(response)
+							}
+						)
+				},
+				showMessageBox(){
+					MessageBox.confirm('',{
+						title:'确定删除',
+						message:'删除之后不可恢复',
+						confirmButtonText:'确认',
+						cancelButtonText:'取消'
+						}).then(action => {
+							if (action == 'confirm') {
+								console.log('点击确认');
+								this.deleateCapauleItem 
+							}
+						}).catch(error =>{
+							if(error == 'cancel'){
+								console.log('点击取消');
+							}
+						});
+				}
 		},
 		mounted:function(){
 			

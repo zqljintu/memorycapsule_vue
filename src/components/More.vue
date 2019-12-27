@@ -19,7 +19,7 @@
 				<form @submit.prevent="login($event)">
 					<el-input class="input_username" v-model="username" placeholder="输入账号">
 					</el-input>
-					<form-item v-if="showP" label="showpassword">
+					<div v-if="showP" label="showpassword">
 						<el-input  v-model="userpassword" :type="text" placeholder="请输入密码">
 							<img
 								class="password"
@@ -27,8 +27,8 @@
 								src="../assets/password_show.png"
 								@click="showPassword">
 						</el-input>
-					</form-item>
-					<form-item v-else label="hidepassword">
+					</div>
+					<div v-else label="hidepassword">
 						<el-input  v-model="userpassword" type="password" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
 							<img
 								class="password"
@@ -36,7 +36,7 @@
 								src="../assets/password_hide.png"
 								@click="showPassword">
 						</el-input>
-					</form-item>
+					</div>
 				</form>
 				<el-button size="medium" round class="button_login" @click="login($event)">登录</el-button>
 			</div>

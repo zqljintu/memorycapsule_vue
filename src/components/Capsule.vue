@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div v-for = "item in capsules" :key="item.pk">
-			<ItemCapsule :item = "item"></ItemCapsule>
+			<ItemCapsule :item = "item" @updateCapsules= "updateCapsules"></ItemCapsule>
 		</div>
 		<div id="div_space">
 		</div>
@@ -75,7 +75,9 @@
 					})
 				}
 			},
-			updateCapsules: function(update){
+			updateCapsules: function(){
+				console.log("通知更新了");
+				this.capsules = "";
 				this.showCapsules();
 			},
 
