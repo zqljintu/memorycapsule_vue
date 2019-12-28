@@ -61,7 +61,8 @@
 				this.actionVisiable = true
 			},
 			editCapsuleItem(){
-
+				this.$store.commit('setCapsuleItem', this.item);
+				this.$router.push({name:'Edit' });
 			},
 			detailCapsuleItem(){
 				this.$store.commit('setCapsuleItem', this.item);
@@ -102,7 +103,7 @@
 						}).then(action => {
 							if (action == 'confirm') {
 								console.log('点击确认');
-								this.deleateCapauleItem 
+								this.deleateCapauleItem();
 							}
 						}).catch(error =>{
 							if(error == 'cancel'){
