@@ -6,7 +6,7 @@
 				   {{item.fields.capsule_type}}
 				</h5>
 			</div>
-			<div id ="div_item_content">
+			<div id ="div_item_content" @click="detailCapsuleItem">
 				{{showContent(item.fields.capsule_content)}}
 			</div>
 			<div id ="div_item_time">
@@ -163,13 +163,13 @@
 	}
 	#image_type{
 		width: 100%;
-		max-width: 50px;
+		max-width: 30px;
 		height: 100%;
 		margin-top: 5px;
 	}
 	#img_menu{
 		position: absolute;
-		width: 25px;
+		width: 22px;
 		margin: 0 auto;
 		bottom: 0;
 		left: 0;

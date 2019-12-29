@@ -1,12 +1,22 @@
 <template>
 	<div>
 		<div v-if="islogin">
-			<div>
-				<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
-				<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
-				<img class="user_headimg" v-else src="../assets/user_man.png">
+			<div class="div_userinfo">
+				<div class="div_top">
+					<div class="div_head">
+						<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
+						<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
+						<img class="user_headimg" v-else src="../assets/user_man.png">
+					</div>
+					<div class="div_name">
+						<h4 class="h_username">{{username}}</h4>
+					</div>
+				</div>
 			</div>
-			<el-button class="button_logout" size="medium" round @click="logout">退出登录</el-button>
+			<div>
+				<el-button class="button_signout" size="medium" round @click="signout">退出登录</el-button>
+				<el-button class="button_logout" size="medium" round @click="logout">注销账号</el-button>
+			</div>
 		</div>
 		<div v-else>
 			<div class="div_main">
@@ -53,6 +63,7 @@
 	</div>
 </template>
 <script type="text/javascript">
+import {MessageBox} from 'mint-ui';
 	export default{
 		data(){
 			return{
@@ -83,26 +94,26 @@
 			login:function(event){
 				event.preventDefault();
 				let formData = new FormData();
-					if(this.utils.isNull(this.username)){
-						this.showPopuTitle('用户名不能为空');
-						return;
-					}
-					if(!this.utils.isTrueUserName(this.username)){
-						this.showPopuTitle('用户名不符合规则');
-						return;
-					}
-					if(this.utils.isNull(this.userpassword)){
-						this.showPopuTitle('密码不能为空');
-						return;
-					}
-					if(!this.utils.isTrueUserPassword(this.userpassword)){
-						this.showPopuTitle('密码不符合规则');
-						return;
-					}
-					formData.append('username',this.username);
-					formData.append('password',this.userpassword);
-					console.log(this.username)
-					console.log(this.userpassword)
+				if(this.utils.isNull(this.username)){
+					this.showPopuTitle('用户名不能为空');
+					return;
+				}
+				if(!this.utils.isTrueUserName(this.username)){
+					this.showPopuTitle('用户名不符合规则');
+					return;
+				}
+				if(this.utils.isNull(this.userpassword)){
+					this.showPopuTitle('密码不能为空');
+					return;
+				}
+				if(!this.utils.isTrueUserPassword(this.userpassword)){
+					this.showPopuTitle('密码不符合规则');
+					return;
+				}
+				formData.append('username',this.username);
+				formData.append('password',this.userpassword);
+				console.log(this.username)
+				console.log(this.userpassword)
 				this.$http.post(this.utils.getUrl() + '/api/user_login', formData)
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
@@ -146,7 +157,7 @@
 				this.userpassword = '';
 				this.username = '';
 			},
-			logout:function(){
+			signout:function(){
 				this.islogin = false;
 				this.username = '';
 				this.clearCapsuleCookie();
@@ -155,16 +166,64 @@
 			setUpdate(islogin, username){
 				this.$store.commit('setIslogin',islogin);
 				this.$store.commit('setUsername',username);
-			}
-			
+			},
+			showLogoutMessageBox: function(){
+				MessageBox.confirm('',{
+						title:'确定注销该账号',
+						message:'注销之后不可恢复，相关提交记录也会被删除',
+						confirmButtonText:'确认',
+						cancelButtonText:'取消'
+						}).then(action => {
+							if (action == 'confirm') {
+								this.reputPassword();
+							}
+						}).catch(error =>{
+							if(error == 'cancel'){
+							
+							}
+						});
+			},
+			reputPassword:function(){
+				MessageBox.prompt('请重新提交账号密码','验证身份',  {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					inputType: 'password',
+				}).then(({ value }) => {
+					this.logout(this.username,value);
+				}).catch(() => {});
+			},
+			logout:function(username,userpassword){
+				formData.append('username',this.username);
+				let formData = new FormData();
+				formData.append('password',this.userpassword);
+				this.$http.post(this.utils.getUrl() + '/api/user_logout', formData)
+				.then((response) => {
+						var res = JSON.parse(response.bodyText)
+						console.log(res)
+						if(res['error_name'] == 203){
+							
+						}else if(res['error_name'] == 202){
+							this.showPopuTitle('该账号尚未注册');
+						}else if(res['error_name'] == 204){
+							this.showPopuTitle('账号密码不匹配');
+						}
+				},
+				(response) => {
+						this.popupVisible = true;
+						this.popupTitle = '注销账号失败';
+					})
+				},
 
-		},
-		mounted:function(){
-			 this.islogin = this.$cookies.isKey('capsule_username');
-			 if(this.islogin){
-				 this.usersex = this.$cookies.get('capsule_usersex');
-				 console.log('zzzzzzzzzzzzMore',this.usersex);
-			 }
+				
+
+			},
+			mounted:function(){
+					this.islogin = this.$cookies.isKey('capsule_username');
+					if(this.islogin){
+						this.usersex = this.$cookies.get('capsule_usersex');
+						this.username = this.$cookies.get('capsule_username');
+						console.log('zzzzzzzzzzzzMore',this.usersex);
+					}
 	    },
 	    watch: {
 
@@ -212,15 +271,39 @@
 		margin-top: 10px;
 		margin-bottom: 5px;
 	}
+	.div_userinfo{
+		display: flex;
+	}
+	.div_top{
+		margin: auto;
+		background: #1256df;
+		display: -webkit-box;
+	}
+	.div_head{
+		display: flex;
+		background: coral;
+	}
 	.user_headimg{
+		margin: auto;
+		top: 0;
+		bottom: 0;
 		width: 50px;
 		height: 50px;
-		margin: 0px 0;
-		margin-top: 20px;
-		//background: #1256df
+		background: #125658;
 	}
-	.button_logout{
-		background: #1DB0B8
+	.div_name{
+		display: flex;
+		background: red;
+		margin-left: 20px;
+	}
+	.h_username{
+		margin: auto;
+		top: 0;
+		bottom: 0;
+	}
+	.button_signout{
+		background: #1DB0B8;
+		margin-top: 20px;
 	}
 	
 </style>
