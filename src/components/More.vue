@@ -15,7 +15,7 @@
 			</div>
 			<div>
 				<el-button class="button_signout" size="medium" round @click="signout">退出登录</el-button>
-				<el-button class="button_logout" size="medium" round @click="logout">注销账号</el-button>
+				<el-button class="button_logout" size="medium" round @click="showLogoutMessageBox">注销账号</el-button>
 			</div>
 		</div>
 		<div v-else>
@@ -189,14 +189,16 @@ import {MessageBox} from 'mint-ui';
 					cancelButtonText: '取消',
 					inputType: 'password',
 				}).then(({ value }) => {
-					this.logout(this.username,value);
+					this.userpassword = value
+					this.logout();
 				}).catch(() => {});
 			},
-			logout:function(username,userpassword){
-				formData.append('username',this.username);
-				let formData = new FormData();
-				formData.append('password',this.userpassword);
-				this.$http.post(this.utils.getUrl() + '/api/user_logout', formData)
+			logout:function(){
+				console.log("zzzzzz",this.username + this.userpassword)
+				let form = new FormData();
+				form.append('username',this.username);
+				form.append('password',this.userpassword);
+				this.$http.post(this.utils.getUrl() + '/api/user_logout', form)
 				.then((response) => {
 						var res = JSON.parse(response.bodyText)
 						console.log(res)
@@ -211,8 +213,10 @@ import {MessageBox} from 'mint-ui';
 				(response) => {
 						this.popupVisible = true;
 						this.popupTitle = '注销账号失败';
-					})
-				},
+				})
+				this.userpassword = ''
+				this.username = ''
+			},
 
 				
 
