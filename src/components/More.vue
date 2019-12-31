@@ -124,7 +124,7 @@ import {MessageBox} from 'mint-ui';
 							this.islogin = true;
 							this.usersex = res['sex'];
 							this.setUpdate(this.islogin, this.username);
-							this.clearInputString();
+							this.signout();
 					  }else if(res['error_name'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
 					  }else if(res['error_name'] == 204){
@@ -189,6 +189,7 @@ import {MessageBox} from 'mint-ui';
 					cancelButtonText: '取消',
 					inputType: 'password',
 				}).then(({ value }) => {
+					this.username = this.$cookies.get('capsule_username');
 					this.userpassword = value
 					this.logout();
 				}).catch(() => {});
@@ -202,11 +203,11 @@ import {MessageBox} from 'mint-ui';
 				.then((response) => {
 						var res = JSON.parse(response.bodyText)
 						console.log(res)
-						if(res['error_name'] == 203){
-							
-						}else if(res['error_name'] == 202){
-							this.showPopuTitle('该账号尚未注册');
-						}else if(res['error_name'] == 204){
+						if(res['error_name'] == 219){
+							this.clearCapsuleCookie()
+						}else if(res['error_name'] == 216){
+							this.showPopuTitle('没有该账号');
+						}else if(res['error_name'] == 217){
 							this.showPopuTitle('账号密码不匹配');
 						}
 				},
@@ -216,9 +217,7 @@ import {MessageBox} from 'mint-ui';
 				})
 				this.userpassword = ''
 				this.username = ''
-			},
-
-				
+			},	
 
 			},
 			mounted:function(){
