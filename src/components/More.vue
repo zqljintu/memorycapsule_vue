@@ -124,7 +124,6 @@ import {MessageBox} from 'mint-ui';
 							this.islogin = true;
 							this.usersex = res['sex'];
 							this.setUpdate(this.islogin, this.username);
-							this.signout();
 					  }else if(res['error_name'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
 					  }else if(res['error_name'] == 204){
@@ -204,10 +203,10 @@ import {MessageBox} from 'mint-ui';
 						var res = JSON.parse(response.bodyText)
 						console.log(res)
 						if(res['error_name'] == 219){
-							this.clearCapsuleCookie()
+							this.signout();
 						}else if(res['error_name'] == 216){
 							this.showPopuTitle('没有该账号');
-						}else if(res['error_name'] == 217){
+						}else if(res['error_name'] == 218){
 							this.showPopuTitle('账号密码不匹配');
 						}
 				},
@@ -216,7 +215,6 @@ import {MessageBox} from 'mint-ui';
 						this.popupTitle = '注销账号失败';
 				})
 				this.userpassword = ''
-				this.username = ''
 			},	
 
 			},

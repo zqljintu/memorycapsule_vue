@@ -3,55 +3,55 @@
 		<mt-header class="loginin_mc"  fixed title="注册">
 			<mt-button  id="loginin_back" icon = "back" slot = "left" @click="back">返回</mt-button>
 		</mt-header>
-		<form @submit.prevent="submit($event)">
-			<el-input v-model="username" placeholder="请自定义一个用户名（数字和英文的组合，不少于六位）">
+		<div @submit.prevent="submit($event)">
+			<el-input class="select" v-model="username" placeholder="请自定义一个用户名（数字和英文的组合，不少于六位）">
 			</el-input>
-			<el-input v-model="useremail" placeholder="请输入邮箱"></el-input>
-			<el-select v-model="usersex" placeholder="请选择性别">
+			<el-input class="select" v-model="useremail" placeholder="请输入邮箱"></el-input>
+			<el-select class="select" v-model="usersex" placeholder="请选择性别">
 				<el-option v-for="item in sexs" 
 						:key="item.value" 
 						:label="item.lable"
 						:value="item.value">
 				</el-option>
 			</el-select>
-			<form-item v-if="showP" label="showpassword">
-				<el-input v-model="userpassword" :type="text" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
+			<div v-if="showP" label="showpassword">
+				<el-input class="select" v-model="userpassword" :type="text" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
 					<img
 						class="password"
 						slot="suffix"
 						src="../assets/password_show.png"
 						 @click="showPassword">
 				</el-input>
-			</form-item>
-			<form-item v-else label="hidepassword">
-				<el-input v-model="userpassword" type="password" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
+			</div>
+			<div v-else label="hidepassword">
+				<el-input class="select" v-model="userpassword" type="password" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
 					<img
 						class="password"
 						slot="suffix"
 						src="../assets/password_hide.png"
 						 @click="showPassword">
 				</el-input>
-			</form-item>
-			<form-item v-if="showP"  label = "showpassword_r">
-					<el-input v-model="userpassword_r" type="text" placeholder="请确认密码">
+			</div>
+			<div v-if="showP"  label = "showpassword_r">
+					<el-input class="select" v-model="userpassword_r" type="text" placeholder="请确认密码">
 						<img
 						class="password"
 						slot="suffix"
 						src="../assets/password_show.png"
 						 @click="showPassword">
 					</el-input>
-			</form-item>
-			<form-item v-else  label="hidepassword_r">
-					<el-input v-model="userpassword_r" type="password" placeholder="请确认密码">
+			</div>
+			<div v-else  label="hidepassword_r">
+					<el-input class="select" v-model="userpassword_r" type="password" placeholder="请确认密码">
 						<img
 							class="password"
 						slot="suffix"
 						src="../assets/password_hide.png"
 						 @click="showPassword">
 					</el-input>
-			</form-item>
-		</form>
-		<ElButton type="button" @click="submit($event)">提交</ElButton>
+			</div>
+		</div>
+		<ElButton class="button_logup" type="button" @click="submit($event)">提交</ElButton>
 		<mt-popup
 			class="toppopup"
 			v-model="popupVisible"
@@ -205,5 +205,17 @@
 		width: 10%;
 		margin: 10px 0;
 		float: right;
+	}
+	.select{
+		width: 100%;
+		margin: 0 auto;
+		margin-top: 3px;
+	}
+	.button_logup{
+		width: 95%;
+		margin: 0 auto;
+		color: #ffffff;
+		margin-top: 20px;
+		background-color: #1DB0B8;
 	}
 </style>
