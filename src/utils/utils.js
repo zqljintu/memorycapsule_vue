@@ -1,5 +1,5 @@
 export default class utils {
-  static debug = false
+  static debug = true
   /**
      * 判断字符串是否为空
      * @param str
@@ -86,6 +86,22 @@ export default class utils {
 
   static getIsLogin(){
     return this.$store.getters.getIsLogin
+  }
+
+  static getDay(str){
+    var dt = new Date(Date.parse(str));
+    return dt.getDay();
+  }
+
+  static getMounth(str){
+    var dt = new Date(Date.parse(str));
+    return dt.getMonth() + 1;
+  }
+
+  static getWeekDay(str){
+    var dt = new Date(Date.parse(str));
+    var weekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    return weekDay[dt.getDay()];
   }
 
 

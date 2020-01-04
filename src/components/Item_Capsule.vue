@@ -1,19 +1,19 @@
 <template>
 	<div class = "div_item">
-		<div id="div_item_left">
-			<div id ="div_item_type">
-				<h5 class="h_type">
-				   {{item.fields.capsule_type}}
-				</h5>
-			</div>
+		<div id="div_item_start">
+			<h2 class="h_day">{{showDay(item.fields.capsule_create_time)}}</h2>
+			<h5 class="h_mounth">{{showMounth(item.fields.capsule_create_time)}}</h5>
+			<h6 class="h_week">{{showWeekDay(item.fields.capsule_create_time)}}</h6>
+		</div>
+		<div id="div_item_mid">
 			<div id ="div_item_content" @click="detailCapsuleItem">
 				{{showContent(item.fields.capsule_content)}}
 			</div>
 			<div id ="div_item_time">
-				{{showTime(item.fields.capsule_create_time)}}
+				
 			</div>
 		</div>
-		<div id ="div_item_type_image" >
+		<div id ="div_item_end" >
 			<img id="image_type" slot="icon" src="../assets/icon_diary.png" v-if="item.fields.capsule_type == '日记'">
 			<img id="image_type" slot="icon" src="../assets/icon_live.png" v-else-if="item.fields.capsule_type == '生活'">
 			<img id="image_type" slot="icon" src="../assets/icon_study.png" v-else-if="item.fields.capsule_type == '学习'">
@@ -53,6 +53,19 @@
 		methods:{
 			showTime: function(str){
 				return '创建时间:' +  this.utils.changeTime(str);
+			},
+			showDay: function(str){
+				var day = this.utils.getDay(str);
+				if (day < 10){
+					day = '0' + day 
+				}
+				return day;
+			},
+			showWeekDay: function(str){
+				return this.utils.getWeekDay(str);
+			},
+			showMounth: function(str){
+				return this.utils.getMounth(str) + "月";
 			},
 			showContent: function(str){
 				return this.utils.cropTheCpasuleContent(str);
@@ -124,18 +137,27 @@
 		margin-bottom: 10px;
 		min-height: 70px;
 		color: #000000;
-		background: #F8F2DC;
+		background: rgba(94, 213, 209, 0.39);
+		border-radius: 0.2em;
 		display: -webkit-box;
 	}
-	#div_item_left{
-		background:pink;
-		width: 90%;
+	#div_item_start{
+		width: 12%;
+		height: 100%;
+		//background: chocolate;
 		position: relative;
 
 	}
-	#div_item_type{
-		display: flex;
-		font-size: 20px;
+	#div_item_mid{
+		//background:pink;
+		width: 78%;
+		position: relative;
+
+	}
+	#div_item_end{
+		width: 10%;
+		//background: blue;
+		position: relative;
 	}
 	.h_type{
 		text-align: left;
@@ -143,27 +165,22 @@
 		padding: 0px;
 	}
 	#div_item_content{
-		min-height: 40px;
-		background: brown;
+		min-height: 50px;
 		text-align:	left;
+		//background: red;
 		text-indent: 20px;
 		font-size: 16px;
 		overflow-wrap: break-word;
-		margin: 10px;
+		margin: 5px;
 	}
 	#div_item_time{
 		margin-top: 10px;
 		bottom: 10px;
-		background: yellow;
-	}
-	#div_item_type_image{
-		width: 10%;
-		background: blue;
-		position: relative;
+		//background: yellow;
 	}
 	#image_type{
-		width: 100%;
-		max-width: 30px;
+		width: 30px;
+		height: 30px;
 		height: 100%;
 		margin-top: 5px;
 	}
@@ -174,8 +191,24 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		margin-bottom: 15px;
-		background: orangered;
+		margin-bottom: 10px;
+		//background: orangered;
+	}
+	.h_day{
+		margin: 0 auto;
+		margin-top: 3px;
+		color: #ffffff;
+		font-size: 28px;
+	}
+	.h_mounth{
+		margin: 0 auto;
+		font-size: 15px;
+		color: #ffffff;
+	}
+	.h_week{
+		margin: 0 auto;
+		font-size: 8.5px;
+		color: #ffffff;
 	}
 
 </style>
