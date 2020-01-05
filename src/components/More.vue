@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="div_more">
 		<div v-if="islogin">
 			<div class="div_userinfo">
 				<div class="div_top">
@@ -9,28 +9,28 @@
 						<img class="user_headimg" v-else src="../assets/user_man.png">
 					</div>
 					<div class="div_name">
+						<h6>账号:</h6>
 						<h4 class="h_username">{{username}}</h4>
 					</div>
 				</div>
 			</div>
-			<div>
-				<el-button class="button_signout" size="medium" round @click="signout">退出登录</el-button>
-				<el-button class="button_logout" size="medium" round @click="showLogoutMessageBox">注销账号</el-button>
+			<div class="div_out">
+				<div class="div_signout">
+					<el-button class="button_signout"  round size="medium" @click="signout">退出登录</el-button>
+				</div>
+				<div class="div_logout">
+					<el-button class="button_logout"  round size="medium" @click="showLogoutMessageBox">注销账号</el-button>
+				</div>
 			</div>
 		</div>
 		<div v-else>
-			<div class="div_main">
-			<h5 class="h_loginup">还没有账号，点击<span><a  href="LoginUp">注册</a></span>吧！</h5>
-			</div>
-			<div class="div_main">
-				<h5 class="h_loginup">有账号？下方登录吧！</h5>
-			</div>
 			<div>
+				<img class="img_cap" src="../assets/icon_memorycapsule.png">
 				<form @submit.prevent="login($event)">
-					<el-input class="input_username" v-model="username" placeholder="输入账号">
+					<el-input class="input_username" v-model="username" placeholder="输入账号" suffix-icon="el-icon-user">
 					</el-input>
 					<div v-if="showP" label="showpassword">
-						<el-input  v-model="userpassword" :type="text" placeholder="请输入密码">
+						<el-input  class="input_password" v-model="userpassword" :type="text" placeholder="请输入密码">
 							<img
 								class="password"
 								slot="suffix"
@@ -39,7 +39,7 @@
 						</el-input>
 					</div>
 					<div v-else label="hidepassword">
-						<el-input  v-model="userpassword" type="password" placeholder="请输入密码（数字和英文的随机组合，不少于六位）">
+						<el-input  class="input_password" v-model="userpassword" type="password" placeholder="请输入密码">
 							<img
 								class="password"
 								slot="suffix"
@@ -48,9 +48,13 @@
 						</el-input>
 					</div>
 				</form>
+				<div class="div_main">
+					<h5 class="h_loginup">还没有账号，点击<span><a  href="LoginUp">注册</a></span>吧！</h5>
+				</div>
 				<el-button size="medium" round class="button_login" @click="login($event)">登录</el-button>
 			</div>
 		</div>
+		<h6 class="h_about">————关于记忆胶囊————</h6>
 		<mt-popup
 			class="toppopup"
 			v-model="popupVisible"
@@ -64,6 +68,7 @@
 </template>
 <script type="text/javascript">
 import {MessageBox} from 'mint-ui';
+import { timeout } from 'q';
 	export default{
 		data(){
 			return{
@@ -74,6 +79,7 @@ import {MessageBox} from 'mint-ui';
 				showP: false,
 				popupVisible: false,
 				popupTitle:'',
+				closeTime: timeout,
 			}
 		},
 		components:{
@@ -131,14 +137,14 @@ import {MessageBox} from 'mint-ui';
 					  }
 				},
 		        (response) => {
-					   this.popupVisible = true;
-					   this.popupTitle = '登录失败';
+						this.showPopuTitle('登录失败');
 		            }
 		      	)
 			},
 			showPopuTitle: function(title){
 				this.popupVisible = true;
 				this.popupTitle = title;
+				this.closePopup();
 			},
 			setCapsuleCookie: function(sex){
 				this.$cookies.set('capsule_username',this.username,60 * 60 *60 *24 *15);
@@ -160,6 +166,7 @@ import {MessageBox} from 'mint-ui';
 				this.islogin = false;
 				this.username = '';
 				this.clearCapsuleCookie();
+				this.clearInputString();
 				this.setUpdate(this.islogin, this.username);
 			},
 			setUpdate(islogin, username){
@@ -211,20 +218,28 @@ import {MessageBox} from 'mint-ui';
 						}
 				},
 				(response) => {
-						this.popupVisible = true;
-						this.popupTitle = '注销账号失败';
+					this.showPopuTitle('注销账号失败');
 				})
 				this.userpassword = ''
-			},	
-
 			},
-			mounted:function(){
-					this.islogin = this.$cookies.isKey('capsule_username');
-					if(this.islogin){
-						this.usersex = this.$cookies.get('capsule_usersex');
-						this.username = this.$cookies.get('capsule_username');
-						console.log('zzzzzzzzzzzzMore',this.usersex);
-					}
+			closePopup: function(){
+				this.closeTime = setTimeout(
+					this.close,1000)
+				
+			},
+			close: function(){
+				this.popupVisible = false;
+				window.clearTimeout(this.closeTime);
+			}
+
+		},
+		mounted:function(){
+				this.islogin = this.$cookies.isKey('capsule_username');
+				if(this.islogin){
+					this.usersex = this.$cookies.get('capsule_usersex');
+					this.username = this.$cookies.get('capsule_username');
+					console.log('zzzzzzzzzzzzMore',this.usersex);
+				}
 	    },
 	    watch: {
 
@@ -233,7 +248,8 @@ import {MessageBox} from 'mint-ui';
 </script>
 <style lang="scss" type="text/css">
 	.div_main{
-		background: pink;
+		margin: 0 auto;
+		width: 80%;
 	}
 	.h_normal{
 		width: 50%;
@@ -249,13 +265,17 @@ import {MessageBox} from 'mint-ui';
 		//background: green;
 	}
 	.h_loginup{
-		width: 100%;
-		text-align: center;
+		margin: 0px;
+		text-align: right;
+		padding-right: 5px;
+		margin-top: 8px;
+		font-size: 12px;
 		//background: red;
 	}
 	.password{
-		width: 10%;
+		width: 8%;
 		margin: 10px 0;
+		margin-right: 4px;
 		float: right;
 	}
 	.toppopup{
@@ -263,26 +283,57 @@ import {MessageBox} from 'mint-ui';
 		width: 100%;
 	}
 	.button_login{
-		width: 100%;
+		width: 80%;
 		margin: 20px 0;
+		margin-top: 25PX;
 		color: #ffffff;
 		background-color: #1DB0B8;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
 	}
 	.input_username{
-		margin-top: 10px;
-		margin-bottom: 5px;
+		margin-top: 25px;
+		width: 80%;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
+	}
+	.input_password{
+		margin-top: 5px;
+		width: 80%;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
 	}
 	.div_userinfo{
 		display: flex;
+		width: 90%;
+		margin: 0 auto;
+		margin-top: 20px;
+		background: rgba(94, 213, 209, 0.39);
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
+		border-radius: 0.3em;
 	}
 	.div_top{
 		margin: auto;
-		background: #1256df;
+		margin-top: 20px;
+		margin-bottom: 30px;
+		//background: #1256df;
 		display: -webkit-box;
+	}
+	.div_out{
+		position: fixed;
+		//background: red;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin-bottom: 150px;
+	}
+	.div_signout{
+		width: 80%;
+		margin: 0 auto;
+	}
+	.div_logout{
+		width: 80%;
+		margin: 0 auto; 
 	}
 	.div_head{
 		display: flex;
-		background: coral;
 	}
 	.user_headimg{
 		margin: auto;
@@ -290,11 +341,11 @@ import {MessageBox} from 'mint-ui';
 		bottom: 0;
 		width: 50px;
 		height: 50px;
-		background: #125658;
+		//background: #125658;
 	}
 	.div_name{
 		display: flex;
-		background: red;
+		//background: red;
 		margin-left: 20px;
 	}
 	.h_username{
@@ -303,8 +354,38 @@ import {MessageBox} from 'mint-ui';
 		bottom: 0;
 	}
 	.button_signout{
-		background: #1DB0B8;
+		margin: 0 auto;
 		margin-top: 20px;
+		color: #ffffff;
+		background-color: #1DB0B8;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
+		width: 100%;
+	}
+	.button_logout{
+		margin: 0 auto;
+		margin-top: 20px;
+		margin-left: 0px;
+		left: 0px;
+		color: #ffffff;
+		background-color: #F44336;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
+		width: 100%;
+
+	}
+	.img_cap{
+		width: 64px;
+		height: 64px;
+		margin-top: 30px;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
+	}
+	.h_about{
+		position: fixed;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		margin-bottom: 80px;
+		font-size: 8px;
+		color: #615f5f;
 	}
 	
 </style>

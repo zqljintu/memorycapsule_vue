@@ -77,6 +77,10 @@ export default class utils {
     return str
   }
 
+  static getStrLength(str){
+    return str.length;
+  }
+
   static getUrl(){
     if (this.debug){
       return "http://127.0.0.1:8000"
@@ -90,7 +94,7 @@ export default class utils {
 
   static getDay(str){
     var dt = new Date(Date.parse(str));
-    return dt.getDay();
+    return dt.getDate();
   }
 
   static getMounth(str){

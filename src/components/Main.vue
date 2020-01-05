@@ -43,8 +43,11 @@
 		},
 		methods:{
 			addCapsule:function(){
-				this.$router.push({
-              		name:'Add' });
+				if(this.$cookies.isKey('capsule_username')){
+					this.$router.push({name:'Add' });
+				}else{
+					this.selected='more';
+				}
 			}
 		},
 		mounted:function(){
@@ -55,6 +58,13 @@
 			  if (this.isLogin){
 				  	this.$store.commit('setIslogin',true);
 			  }
+		},
+		beforeCreate(){
+ 			document.querySelector('body').setAttribute('style', 'background-color:#F2F2F2')
+
+		},
+		beforeDestroy(){
+			document.querySelector('body').removeAttribute('style')
 		}
 	}
 	
@@ -67,13 +77,20 @@
 	}
 	.main_con{
 		margin-top: 0px;
+		padding: 0px;
 	}
 	.main_mc{
 			position: fixed;
-			color: #5ED5D1;
+			color: rgba(126, 228, 224, 0.8);
 			font-size: 18px;
 	}
-	#tab_bar{overflow: scroll;}
+	#header_mc{
+		margin: 0 auto;
+		font-size: 18px;
+	}
+	#tab_bar{
+		overflow: scroll;
+	}
 	.div_add{
 		height: 35px;
 		width: 35px;
@@ -81,11 +98,11 @@
 		left: 0px;
 		right: 0px;
 		bottom: 0px;
-		background: #5ED5D1;
+		background: rgba(126, 228, 224, 0.8);
 		display: flex;
 		margin: 0 auto;
 		border-radius: 8em;
-		margin-bottom: 10px;
+		margin-bottom: 12px;
 	}
 	.img_add{
 		width: 20px;

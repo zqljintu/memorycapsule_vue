@@ -30,7 +30,7 @@
 </script>
 <style lang="scss" type="text/css">
 	.detail_mc{color:#ffffff;
-			background: #1DB0B8;
+			//background: #1DB0B8;
 			position: fixed;
 			font-size: 18px;}
 </style>

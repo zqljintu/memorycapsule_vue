@@ -9,8 +9,8 @@
 			<div id ="div_item_content" @click="detailCapsuleItem">
 				{{showContent(item.fields.capsule_content)}}
 			</div>
-			<div id ="div_item_time">
-				
+			<div id ="div_item_other">
+				<h6 class="h_wordsize">{{showContentSize(item.fields.capsule_content)}}</h6>
 			</div>
 		</div>
 		<div id ="div_item_end" >
@@ -72,6 +72,9 @@
 			},
 			showActionSheet(){
 				this.actionVisiable = true
+			},
+			showContentSize(str){
+				return this.utils.getStrLength(str) + ' 字';
 			},
 			editCapsuleItem(){
 				this.$store.commit('setCapsuleItem', this.item);
@@ -135,23 +138,29 @@
 	.div_item{
 		width: 100%;
 		margin-bottom: 10px;
-		min-height: 70px;
+		min-height: 80px;
 		color: #000000;
 		background: rgba(94, 213, 209, 0.39);
 		border-radius: 0.2em;
 		display: -webkit-box;
+		box-shadow:  0px 2px 0px 0px #e5e5e5;
 	}
 	#div_item_start{
 		width: 12%;
 		height: 100%;
-		//background: chocolate;
+	//	background: chocolate;
 		position: relative;
 
 	}
 	#div_item_mid{
 		//background:pink;
 		width: 78%;
+		height: 100%;
+		//background: rebeccapurple;
 		position: relative;
+		border-left-style: solid;
+		border-left-color: rgba(76, 179, 231, 0.699);
+		border-left-width: 0.5px;
 
 	}
 	#div_item_end{
@@ -165,18 +174,22 @@
 		padding: 0px;
 	}
 	#div_item_content{
-		min-height: 50px;
+		min-height: 70px;
 		text-align:	left;
 		//background: red;
-		text-indent: 20px;
+		text-indent: 10px;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		color: #1a1a1afb;
 		font-size: 16px;
 		overflow-wrap: break-word;
-		margin: 5px;
+		margin: 3px;
+		margin-top: 5px;
+		margin-left: 5px;
 	}
-	#div_item_time{
-		margin-top: 10px;
-		bottom: 10px;
+	#div_item_other{
+		height: 100%;
 		//background: yellow;
+		display: -webkit-box;
 	}
 	#image_type{
 		width: 30px;
@@ -197,18 +210,38 @@
 	.h_day{
 		margin: 0 auto;
 		margin-top: 3px;
-		color: #ffffff;
+		color: #82A6F5;
 		font-size: 28px;
+		padding-left: 5px;
+		//background: #000000;
+		text-align: left;
 	}
 	.h_mounth{
+		width: 100%;
 		margin: 0 auto;
-		font-size: 15px;
-		color: #ffffff;
+		font-size: 18px;
+		color: #82A6F5;
+		margin-top: -5px;
+		padding-left: 5px;
+		//background: #000000;
+		text-align: left;
 	}
 	.h_week{
 		margin: 0 auto;
 		font-size: 8.5px;
-		color: #ffffff;
+		color:#82A6F5;
+		padding-left: 6px;
+		//background: #000000;
+		text-align: left;
+	}
+	.h_wordsize{
+		margin: 0;
+		height: 100%;
+		margin-top: 5px;
+		margin-left: 5px;
+		margin-bottom: 2px;
+		color: #82A6F5;
+		//background: red;
 	}
 
 </style>
