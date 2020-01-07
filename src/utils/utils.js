@@ -94,18 +94,31 @@ export default class utils {
 
   static getDay(str){
     var dt = new Date(Date.parse(str));
-    return dt.getDate();
+    var day = dt.getDate();
+    if (day < 10){
+      day = '0' + day;
+    }
+    return day;
   }
 
   static getMounth(str){
     var dt = new Date(Date.parse(str));
-    return dt.getMonth() + 1;
+    var mou = dt.getMonth() + 1;
+    if(mou < 10){
+      mou = '0' + mou;
+    }
+    return mou;
   }
 
   static getWeekDay(str){
     var dt = new Date(Date.parse(str));
     var weekDay = ["星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
     return weekDay[dt.getDay()];
+  }
+
+  static getYear(str){
+    var dt = new Date(Date.parse(str));
+    return dt.getFullYear();
   }
 
 

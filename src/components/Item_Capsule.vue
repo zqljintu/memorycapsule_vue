@@ -56,9 +56,6 @@
 			},
 			showDay: function(str){
 				var day = this.utils.getDay(str);
-				if (day < 10){
-					day = '0' + day 
-				}
 				return day;
 			},
 			showWeekDay: function(str){
@@ -219,7 +216,7 @@
 	.h_mounth{
 		width: 100%;
 		margin: 0 auto;
-		font-size: 18px;
+		font-size: 14.5px;
 		color: #82A6F5;
 		margin-top: -5px;
 		padding-left: 5px;
@@ -228,9 +225,10 @@
 	}
 	.h_week{
 		margin: 0 auto;
-		font-size: 8.5px;
+		font-size: 10px;
 		color:#82A6F5;
 		padding-left: 6px;
+		margin-top: 3px;
 		//background: #000000;
 		text-align: left;
 	}
