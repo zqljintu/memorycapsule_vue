@@ -2,7 +2,7 @@
 	<div class="div_more">
 		<div v-if="islogin">
 			<div class="div_userinfo">
-				<div class="div_top">
+				<div class="div_mtop">
 					<div class="div_head">
 						<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
 						<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
@@ -309,7 +309,7 @@ import { timeout } from 'q';
 		box-shadow:  0px 2px 0px 0px #e5e5e5;
 		border-radius: 0.3em;
 	}
-	.div_top{
+	.div_mtop{
 		margin: auto;
 		margin-top: 20px;
 		margin-bottom: 30px;

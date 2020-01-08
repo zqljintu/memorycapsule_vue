@@ -3,7 +3,8 @@
 		<mt-header class="loginin_mc"  fixed title="注册">
 			<mt-button  id="loginin_back" icon = "back" slot = "left" @click="back">返回</mt-button>
 		</mt-header>
-		<div @submit.prevent="submit($event)">
+		<h3 class="h_title">请按照以下要求注册账号!</h3>
+		<div class="div_uptop" @submit.prevent="submit($event)">
 			<el-input class="select" v-model="username" placeholder="请自定义一个用户名（数字和英文的组合，不少于六位）">
 			</el-input>
 			<el-input class="select" v-model="useremail" placeholder="请输入邮箱"></el-input>
@@ -215,7 +216,18 @@
 		width: 95%;
 		margin: 0 auto;
 		color: #ffffff;
-		margin-top: 20px;
+		margin-top: 30px;
 		background-color: #1DB0B8;
+	}
+	.div_uptop{
+		margin-top: 20px;
+	}
+	.h_title{
+		margin: 0;
+		text-align: left;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 15px;
+		padding-left: 15px;
+		color:  #F44336;;
 	}
 </style>

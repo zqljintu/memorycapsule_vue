@@ -4,8 +4,14 @@
 			<mt-button  id="add_back" icon = "back" slot = "left" @click="back">返回</mt-button>
     	</mt-header>
 		<div class="add_nav">
-			<mt-button id="add_button_content" size = "small" @click.native.prevent="active = 'tab_addcontent'">添加内容</mt-button>
-			<mt-button id="add_button_other" size="small" @click.native.prevent="active = 'tab_addother'">添加其他</mt-button>
+			<div>
+				<mt-button id="add_button_content" size = "small" @click.native.prevent="active = 'tab_addcontent'" v-if = "active =='tab_addcontent'">添加内容</mt-button>
+				<mt-button id="add_button_content_is" size = "small" @click.native.prevent="active = 'tab_addcontent'" v-else >添加内容</mt-button>
+			</div>
+			<div>
+				<mt-button id="add_button_other" size="small" @click.native.prevent="active = 'tab_addother'" v-if = "active =='tab_addother'">添加其他</mt-button>
+				<mt-button id="add_button_other_is" size="small" @click.native.prevent="active = 'tab_addother'" v-else>添加其他</mt-button>
+			</div>
 		</div>
 		<form @submit.prevent="submit($event)">
 			<mt-tab-container class="add_tab" v-model="active">
@@ -166,18 +172,29 @@
 			font-size: 18px;}
 	.add_nav{
 		margin: 0 auto;
-		margin-top: -15px;
+		margin-top: 10px;
 		flex: none;
 		display: -webkit-box;
 		width: 90%
 	}
-	.add_button_content{
-		width: 200px;
-		float: right;
+	#add_button_content{
+		width: 100px;
+		background: #1DB0B8;
 	}
-	.add_button_other{
-		width: 200px;
-		float: left;
+	add_button_content_is{
+		width: 110px;
+		background: #1DB0B8;
+	}
+	#add_button_other{
+		width: 100px;
+		margin-left: 5px;
+		background: #1DB0B8;
+	}
+	.add_button_other_is{
+		width: 110px;
+		margin-left: 5px;
+		background: #1DB0B8;
+
 	}
 	.add_back{
 			font-size: 15px
@@ -195,6 +212,8 @@
 		margin-top: 5px;
 	}
 	#textinput_capsule_content{
+		font-size: 16px;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 		height:300px;
 		min-height: 50%;
 		width: 90%;
@@ -206,5 +225,6 @@
 		margin: 0 auto;
 		margin-top: 50px;
 		background: #1DB0B8;
+		color: #ffffff;
 	}
 </style>

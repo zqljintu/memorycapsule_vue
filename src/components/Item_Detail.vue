@@ -18,7 +18,13 @@
                 <img class="imgd_type" slot="icon" src="../assets/icon_diary.png" v-else>
             </div>
         </div>
-        <h1 v-if = "capsuleItem.fields">{{capsuleItem.fields.capsule_type}}</h1>
+        <h3 class="hd_content" v-if = "capsuleItem.fields" >{{capsuleItem.fields.capsule_content}}</h3>
+        <div class="div_mbage" v-if = "capsuleItem.fields" >
+            <mt-badge size="large" v-if="capsuleItem.fields.capsule_type !='' "  >{{capsuleItem.fields.capsule_type}}</mt-badge>
+            <mt-badge size="large" v-if="capsuleItem.fields.capsule_location !='' " >{{capsuleItem.fields.capsule_location}}</mt-badge>
+            <mt-badge size="large" v-if="capsuleItem.fields.capsule_person !='' " >{{capsuleItem.fields.capsule_person}}</mt-badge>
+            <mt-badge size="large" v-if="capsuleItem.fields.capsule_time !='' " >{{capsuleItem.fields.capsule_time}}</mt-badge>
+        </div>
     </div>
 </template>
 <script type="text/javascript">
@@ -59,7 +65,7 @@
         font-size: 18px;
         }
     .div_top{
-        background: rebeccapurple;
+        //background: rebeccapurple;
         display: flex;
         margin-top: -15px;
     }
@@ -95,10 +101,31 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-weight: lighter;
     }
+    .hd_content{
+        margin: 0;
+        margin-top: 10px;
+        min-height: 250px;
+        font-size: 16px;
+        text-align: left;
+        overflow-wrap: break-word;
+        padding: 10px;
+        text-indent: 10px;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		color: #1a1a1afb;
+        background: rgba(94, 213, 209, 0.39);
+        border-radius: 0.4em;
+        box-shadow:  0px 2px 0px 0px #e5e5e5;
+    }
     .imgd_type{
         width: 30px;
         height: 30px;
         margin-top: 5px;
+    }
+    .div_mbage{
+        //background: rebeccapurple;
+        margin-top: 20px;
+        padding: 10px;
+        text-align: left;
     }
 
 </style>
