@@ -66,7 +66,7 @@
 					.then((response) => {
 					var res = JSON.parse(response.bodyText)
 					console.log(res)  
-					if(res['error_name'] == 207){
+					if(res['code'] == 207){
 						this.capsules = res['list']
 					} else {
 						this.$message.error('查询capsules失败')

@@ -157,12 +157,12 @@
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
 			     	  console.log(res)
-					  if(res['error_name'] == 0){
+					  if(res['code'] == 0){
 							this.showPopuTitle('注册成功');
 							this.setCapsuleCookie();
 					   		this.$emit('updateCapsules',this.update);
 					   		this.back();
-					  }else if(res['error_name'] == 201){
+					  }else if(res['code'] == 201){
 						  	this.showPopuTitle('账号名已重复');
 					  }
 		        },

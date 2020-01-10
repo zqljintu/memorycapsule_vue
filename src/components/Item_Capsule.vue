@@ -90,14 +90,14 @@
 						.then((response) => {
 								var res = JSON.parse(response.bodyText)
 								console.log(res)
-								if(res['error_name'] == 213){
+								if(res['code'] == 213){
 									console.log("删除成功")
 									this.$emit('updateCapsules')
-								}else if(res['error_name'] == 202){
+								}else if(res['code'] == 202){
 									console.log("没有该账号")
-								}else if(res['error_name'] == 214){
+								}else if(res['code'] == 214){
 									console.log("该条记录不是该用户创建")
-								}else if(res['error_name'] == 2111){
+								}else if(res['code'] == 2111){
 									console.log("没有该记录")
 								}else{
 									console.log("删除失败")

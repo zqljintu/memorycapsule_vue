@@ -124,15 +124,15 @@ import { timeout } from 'q';
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
 			     	  console.log(res)
-					  if(res['error_name'] == 203){
+					  if(res['code'] == 203){
 							this.showPopuTitle('登录成功');
 							this.setCapsuleCookie(res['sex']);
 							this.islogin = true;
 							this.usersex = res['sex'];
 							this.setUpdate(this.islogin, this.username);
-					  }else if(res['error_name'] == 202){
+					  }else if(res['code'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
-					  }else if(res['error_name'] == 204){
+					  }else if(res['code'] == 204){
 						  	this.showPopuTitle('账号密码不匹配');
 					  }
 				},
@@ -209,11 +209,11 @@ import { timeout } from 'q';
 				.then((response) => {
 						var res = JSON.parse(response.bodyText)
 						console.log(res)
-						if(res['error_name'] == 219){
+						if(res['code'] == 219){
 							this.signout();
-						}else if(res['error_name'] == 216){
+						}else if(res['code'] == 216){
 							this.showPopuTitle('没有该账号');
-						}else if(res['error_name'] == 218){
+						}else if(res['code'] == 218){
 							this.showPopuTitle('账号密码不匹配');
 						}
 				},

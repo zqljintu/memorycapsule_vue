@@ -139,7 +139,7 @@
 		      	.then((response) => {
 					var res = JSON.parse(response.bodyText)
 			     	console.log(res)
-					if(res['error_name'] == 206){
+					if(res['code'] == 206){
 			           Toast("提交成功");
 					   //this.$emit('updateCapsules',this.update)
 					   this.back();

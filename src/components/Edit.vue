@@ -135,7 +135,7 @@
 		      	.then((response) => {
 					var res = JSON.parse(response.bodyText)
 			     	console.log(res)
-					if(res['error_name'] == 213){
+					if(res['code'] == 213){
 			           Toast("修改成功");
 					   this.back();
 			        }else{
