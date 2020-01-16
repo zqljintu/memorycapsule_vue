@@ -126,7 +126,7 @@ import { timeout } from 'q';
 			     	  console.log(res)
 					  if(res['code'] == 203){
 							this.showPopuTitle('登录成功');
-							this.setCapsuleCookie(res['sex']);
+							this.setCapsuleCookie(res['token'],res['sex']);
 							this.islogin = true;
 							this.usersex = res['sex'];
 							this.setUpdate(this.islogin, this.username);
@@ -146,14 +146,17 @@ import { timeout } from 'q';
 				this.popupTitle = title;
 				this.closePopup();
 			},
-			setCapsuleCookie: function(sex){
+			setCapsuleCookie: function(token,sex){
 				this.$cookies.set('capsule_username',this.username,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_password',this.userpassword,60 * 60 *60 *24 *15);
+				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
+				console.info(token);
 				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
 			},
 			clearCapsuleCookie:function(){
 				this.$cookies.remove('capsule_username');
 				this.$cookies.remove('capsule_password');
+				this.$cookies.remove('capsule_token');
 				this.$cookies.remove('capsule_usersex');
 				this.islogin = false;
 				console.log('zzzzzz','out');

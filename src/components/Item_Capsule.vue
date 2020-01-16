@@ -14,11 +14,11 @@
 			</div>
 		</div>
 		<div id ="div_item_end" >
-			<img id="image_type" slot="icon" src="../assets/icon_diary.png" v-if="item.fields.capsule_type == '日记'">
-			<img id="image_type" slot="icon" src="../assets/icon_live.png" v-else-if="item.fields.capsule_type == '生活'">
-			<img id="image_type" slot="icon" src="../assets/icon_study.png" v-else-if="item.fields.capsule_type == '学习'">
-			<img id="image_type" slot="icon" src="../assets/icon_travel.png" v-else-if="item.fields.capsule_type == '旅行'">
-			<img id="image_type" slot="icon" src="../assets/icon_work.png" v-else-if="item.fields.capsule_type ==='工作'">
+			<img class="image_type" slot="icon" src="../assets/icon_diary.png" v-if="item.fields.capsule_type == '日记'">
+			<img class="image_type" slot="icon" src="../assets/icon_live.png" v-else-if="item.fields.capsule_type == '生活'">
+			<img class="image_type" slot="icon" src="../assets/icon_study.png" v-else-if="item.fields.capsule_type == '学习'">
+			<img class="image_type" slot="icon" src="../assets/icon_travel.png" v-else-if="item.fields.capsule_type == '旅行'">
+			<img class="image_type" slot="icon" src="../assets/icon_work.png" v-else-if="item.fields.capsule_type ==='工作'">
 			<img id="image_type" slot="icon" src="../assets/icon_diary.png" v-else>
 			<img id="img_menu" slot="icon" src="../assets/menu.png" @click="showActionSheet">
 		</div>
@@ -84,8 +84,7 @@
 			},
 			deleateCapauleItem(){
 				let formData = new FormData()
-				formData.append('username',this.item.fields.capsule_id);
-			    formData.append('capsulepk',this.item.pk);
+			    formData.append('capsule_pk',this.item.pk);
 				this.$http.post(this.utils.getUrl() + '/api/delete_capsule', formData)
 						.then((response) => {
 								var res = JSON.parse(response.bodyText)
@@ -97,7 +96,7 @@
 									console.log("没有该账号")
 								}else if(res['code'] == 214){
 									console.log("该条记录不是该用户创建")
-								}else if(res['code'] == 2111){
+								}else if(res['code'] == 211){
 									console.log("没有该记录")
 								}else{
 									console.log("删除失败")
@@ -188,10 +187,9 @@
 		//background: yellow;
 		display: -webkit-box;
 	}
-	#image_type{
-		width: 30px;
-		height: 30px;
-		height: 100%;
+	.image_type{
+		width: 35px;
+		height: 35px;
 		margin-top: 5px;
 	}
 	#img_menu{
@@ -208,8 +206,8 @@
 		margin: 0 auto;
 		margin-top: 3px;
 		color: #82A6F5;
-		font-size: 28px;
-		padding-left: 5px;
+		font-size: 30px;
+		padding-left: 2px;
 		//background: #000000;
 		text-align: left;
 	}
@@ -219,7 +217,7 @@
 		font-size: 14.5px;
 		color: #82A6F5;
 		margin-top: -5px;
-		padding-left: 5px;
+		padding-left: 7px;
 		//background: #000000;
 		text-align: left;
 	}
@@ -227,7 +225,7 @@
 		margin: 0 auto;
 		font-size: 10px;
 		color:#82A6F5;
-		padding-left: 6px;
+		padding-left: 7px;
 		margin-top: 3px;
 		//background: #000000;
 		text-align: left;

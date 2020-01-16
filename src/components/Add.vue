@@ -126,7 +126,6 @@
 					Toast("请输入具体内容");
 					return;
 				}
-				formData.append('capsule_id',this.username);
 				formData.append('capsule_type',this.capsule_type);
 				formData.append('capsule_content',this.capsule_content);
 				formData.append('capsule_time',this.capsule_time);

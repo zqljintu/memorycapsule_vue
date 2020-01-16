@@ -56,13 +56,8 @@
 		},
 		methods:{
 			showCapsules () {
-			   /*this.$ajax.get('http://127.0.0.1:8000/api/show_capsules').then((response)=>{
-                    console.log(response.data)
-                 }).catch((response)=>{
-                    console.log(response)
-				})*/
 				if(this.islogin){
-					this.$http.get(this.utils.getUrl()+ '/api/show_capsules?username=' + this.username)
+					this.$http.get(this.utils.getUrl()+ '/api/show_capsules')
 					.then((response) => {
 					var res = JSON.parse(response.bodyText)
 					console.log(res)  

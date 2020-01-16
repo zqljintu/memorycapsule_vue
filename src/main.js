@@ -22,9 +22,8 @@ Vue.use(VueResource)
 Vue.use(VueCookies) // cookie方法
 Vue.prototype.utils = utils//自定义的一些方法
 Vue.prototype.cookieutils = cookieutils
-Vue.prototype.$ajax = axios
-
-/* eslint-disable no-new */
+Vue.prototype.$axios = axios 
+Vue.http.headers.common['Authorization'] = $cookies.get('capsule_token');//将token发送到服务器验证账号
 new Vue({
   el: '#app',
   router,
