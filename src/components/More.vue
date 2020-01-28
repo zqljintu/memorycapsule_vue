@@ -9,8 +9,9 @@
 						<img class="user_headimg" v-else src="../assets/user_man.png">
 					</div>
 					<div class="div_name">
-						<h6>账号:</h6>
-						<h4 class="h_username">{{username}}</h4>
+						<h4 class="h_username" @click="editNickname">{{usernickname}}</h4>
+						<h6 class="h_username">{{username}}</h6>
+						<h5 class="h_username" @click="editUsertitle">{{usertitle}}</h5>
 					</div>
 				</div>
 			</div>
@@ -75,6 +76,8 @@ import { timeout } from 'q';
 				islogin:false,
 				username: '',
 				usersex: '',
+				usernickname: '昵称',
+				usertitle: '个性签名',
 				userpassword:'',
 				showP: false,
 				popupVisible: false,
@@ -126,7 +129,7 @@ import { timeout } from 'q';
 			     	  console.log(res)
 					  if(res['code'] == 203){
 							this.showPopuTitle('登录成功');
-							this.setCapsuleCookie(this.username,res['token'],res['sex']);
+							this.setCapsuleCookie(this.username,res['token'],res['sex'],res['nickname'],res['usertitle']);
 							this.setUpdate(true, this.username);
 					  }else if(res['code'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
@@ -144,17 +147,23 @@ import { timeout } from 'q';
 				this.popupTitle = title;
 				this.closePopup();
 			},
-			setCapsuleCookie: function(name,token,sex){
+			setCapsuleCookie: function(name,token,sex,nickanme,usertitle){
 				this.usersex = sex;
 				this.username= name;
+				this.usernickname = nickanme;
+				this.usertitle = usertitle;
 				this.$cookies.set('capsule_username',name,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
 				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
+				this.$cookies.set('capsule_nickname',nickanme, 60 *60 *24 *15);
+				this.$cookies.set('capsule_usertitle',usertitle, 60 *60 *24 *15);
 			},
 			clearCapsuleCookie:function(){
 				this.$cookies.remove('capsule_username');
 				this.$cookies.remove('capsule_token');
 				this.$cookies.remove('capsule_usersex');
+				this.$cookies.remove('capsule_nickname');
+				this.$cookies.remove('capsule_usertitle');
 				console.log('zzzzzz','out');
 			},
 			clearInputString:function(){
@@ -219,6 +228,61 @@ import { timeout } from 'q';
 				})
 				this.userpassword = ''
 			},
+			editNickname:function(){
+				MessageBox.prompt('修改昵称','请输入你的昵称',  {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					inputType: 'text',
+				}).then(({ value }) => {
+					this.postUserInfo(0,value)
+				}).catch(() => {});
+			},
+			editUsertitle:function(){
+				MessageBox.prompt('修改个性签名','请输入签名（不超过20字）',  {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					inputType: 'text',
+				}).then(({ value }) => {
+					this.postUserInfo(1,value)
+				}).catch(() => {});
+			},
+			postUserInfo:function(type, str){
+				let form = new FormData();
+				if (type == 0){
+					form.append('nickname',str);
+					this.$http.post(this.utils.getUrl() + '/api/edit_nickname', form)
+					.then((response) => {
+							var res = JSON.parse(response.bodyText)
+							console.log(res)
+							if(res['code'] == 223){
+								this.usernickname = res['nickname']
+								this.$cookies.set('capsule_nickname',this.usernickname, 60 *60 *24 *15);
+							}else{
+
+							}
+					},
+					(response) => {
+						this.showPopuTitle('注销账号失败');
+					})
+
+				}else if(type == 1){
+					form.append('usertitle',str);
+					this.$http.post(this.utils.getUrl() + '/api/edit_usertitle', form)
+					.then((response) => {
+							var res = JSON.parse(response.bodyText)
+							console.log(res)
+							if(res['code'] == 225){
+								this.usertitle = res['usertitle']
+								this.$cookies.set('capsule_usertitle',this.usertitle, 60 *60 *24 *15);
+							}else {
+
+							}
+					},
+					(response) => {
+						this.showPopuTitle('注销账号失败');
+					})
+				}
+			},
 			closePopup: function(){
 				this.closeTime = setTimeout(
 					this.close,1000)
@@ -233,9 +297,11 @@ import { timeout } from 'q';
 		mounted:function(){
 				this.islogin = this.$store.getters.getIsLogin
 				if(this.islogin){
+					this.usernickname = this.$cookies.get('capsule_nickname');
+					this.usertitle = this.$cookies.get('capsule_usertitle');
 					this.usersex = this.$cookies.get('capsule_usersex');
 					this.username = this.$cookies.get('capsule_username');
-					console.log('zzzzzzzzzzzzMore',this.usersex);
+					console.log('zzzzzzzzzzzzMore',"登录了");
 				}
 	    },
 	    computed:{
@@ -322,6 +388,7 @@ import { timeout } from 'q';
 		margin: auto;
 		margin-top: 20px;
 		margin-bottom: 30px;
+		margin-left: 20%;
 		//background: #1256df;
 		display: -webkit-box;
 	}
@@ -353,14 +420,17 @@ import { timeout } from 'q';
 		//background: #125658;
 	}
 	.div_name{
-		display: flex;
+		//display: flex;
+		margin: auto;
 		//background: red;
 		margin-left: 20px;
 	}
 	.h_username{
+		text-align: left;
 		margin: auto;
-		top: 0;
-		bottom: 0;
+		margin-top: 5px;
+		//top: 0;
+		//bottom: 0;
 	}
 	.button_signout{
 		margin: 0 auto;
