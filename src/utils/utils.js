@@ -1,5 +1,5 @@
 export default class utils {
-  static debug = false
+  static debug = true
   /**
      * 判断字符串是否为空
      * @param str

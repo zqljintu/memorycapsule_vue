@@ -126,10 +126,8 @@ import { timeout } from 'q';
 			     	  console.log(res)
 					  if(res['code'] == 203){
 							this.showPopuTitle('登录成功');
-							this.setCapsuleCookie(res['token'],res['sex']);
-							this.islogin = true;
-							this.usersex = res['sex'];
-							this.setUpdate(this.islogin, this.username);
+							this.setCapsuleCookie(this.username,res['token'],res['sex']);
+							this.setUpdate(true, this.username);
 					  }else if(res['code'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
 					  }else if(res['code'] == 204){
@@ -146,19 +144,17 @@ import { timeout } from 'q';
 				this.popupTitle = title;
 				this.closePopup();
 			},
-			setCapsuleCookie: function(token,sex){
-				this.$cookies.set('capsule_username',this.username,60 * 60 *60 *24 *15);
-				this.$cookies.set('capsule_password',this.userpassword,60 * 60 *60 *24 *15);
+			setCapsuleCookie: function(name,token,sex){
+				this.usersex = sex;
+				this.username= name;
+				this.$cookies.set('capsule_username',name,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
-				console.info(token);
 				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
 			},
 			clearCapsuleCookie:function(){
 				this.$cookies.remove('capsule_username');
-				this.$cookies.remove('capsule_password');
 				this.$cookies.remove('capsule_token');
 				this.$cookies.remove('capsule_usersex');
-				this.islogin = false;
 				console.log('zzzzzz','out');
 			},
 			clearInputString:function(){
@@ -166,15 +162,13 @@ import { timeout } from 'q';
 				this.username = '';
 			},
 			signout:function(){
-				this.islogin = false;
 				this.username = '';
 				this.clearCapsuleCookie();
 				this.clearInputString();
-				this.setUpdate(this.islogin, this.username);
+				this.setUpdate(false, this.username);
 			},
 			setUpdate(islogin, username){
 				this.$store.commit('setIslogin',islogin);
-				this.$store.commit('setUsername',username);
 			},
 			showLogoutMessageBox: function(){
 				MessageBox.confirm('',{
@@ -237,15 +231,27 @@ import { timeout } from 'q';
 
 		},
 		mounted:function(){
-				this.islogin = this.$cookies.isKey('capsule_username');
+				this.islogin = this.$store.getters.getIsLogin
 				if(this.islogin){
 					this.usersex = this.$cookies.get('capsule_usersex');
 					this.username = this.$cookies.get('capsule_username');
 					console.log('zzzzzzzzzzzzMore',this.usersex);
 				}
 	    },
+	    computed:{
+			shouldUpdate: function() {
+				return this.$store.getters.getIsLogin
+			}
+		},
 	    watch: {
-
+			shouldUpdate() {
+				if (this.$store.getters.getIsLogin){
+					this.islogin = true;
+				} else{
+					this.islogin = false;
+					console.log('zzzzzzzzWatch',"false");
+				}
+			}
 		}
 	}
 </script>

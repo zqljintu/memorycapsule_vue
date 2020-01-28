@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     islogin: false,
+    token: '',
     userName: '',
     capsuleItem: ''
   },
@@ -19,6 +20,9 @@ export const store = new Vuex.Store({
     },
     getCapsuleitem: (state) => {
       return state.capsuleItem
+    },
+    getToken: (state) => {
+      return state.token
     }
   },
 
@@ -31,6 +35,9 @@ export const store = new Vuex.Store({
     },
     setCapsuleItem: (state, item) => {
       state.capsuleItem = item
+    },
+    setToken: (state, token) =>{
+      state.token = token
     }
   },
 

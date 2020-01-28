@@ -159,8 +159,12 @@
 			     	  console.log(res)
 					  if(res['code'] == 0){
 							this.showPopuTitle('注册成功');
-							this.setCapsuleCookie();
-					   		this.$emit('updateCapsules',this.update);
+							this.setCapsuleCookie(res['token'],res['sex']);
+							this.$emit('updateCapsules',this.update);
+							/**
+							 * 全局广播，告诉其他组件已经注册成功了
+							 */
+							//this.$store.commit('setIslogin',true);//全局广播有的话，就不需要使用传值方法了
 					   		this.back();
 					  }else if(res['code'] == 201){
 						  	this.showPopuTitle('账号名已重复');
@@ -179,11 +183,12 @@
 				this.popupVisible = true;
 				this.popupTitle = title;
 			},
-			setCapsuleCookie: function(){
+			setCapsuleCookie: function(token,sex){
 				this.$cookies.set('capsule_username',this.username,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_password',this.userpassword,60 * 60 *60 *24 *15);
-				this.$cookies.set('capsule_usersex',this.usersex,60*60 *24 *15);
-			}
+				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
+				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
+			},
 		},
 		mounted:function(){		
 		}
