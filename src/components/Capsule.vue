@@ -55,7 +55,7 @@
 		},
 		methods:{
 			showCapsules () {
-				this.$http.get(this.utils.getUrl()+ '/api/show_capsules')
+				this.$http.get(this.utils.getUrl()+ '/api/show_capsules' + '?page=1')
 				.then((response) => {
 				var res = JSON.parse(response.bodyText)
 				console.log(res)  
