@@ -7,6 +7,8 @@
 		<div class="div_uptop" @submit.prevent="submit($event)">
 			<el-input class="select" v-model="username" placeholder="请自定义一个用户名（数字和英文的组合，不少于六位）">
 			</el-input>
+			<input type="file" name="pclogo" @change="addUserImg($event)" ref='box' accept="image/*">
+			</input>
 			<el-input class="select" v-model="useremail" placeholder="请输入邮箱"></el-input>
 			<el-select class="select" v-model="usersex" placeholder="请选择性别">
 				<el-option v-for="item in sexs" 
@@ -87,6 +89,7 @@
 					 label: '女'
 					},
 				],
+				userimg: '',
 			}
 		},
 		components:{
@@ -104,9 +107,17 @@
 					this.showP = true;
 				}	
 			},
+			addUserImg(event){	
+				var files = this.$refs.box.files;
+				if (files.length >= 1){
+			       this.userimg = files[0]
+				}
+			},
 			submit:function(event){
 				event.preventDefault();
 				let formData = new FormData();
+					console.log(this.userimg);
+					return;
 					if(this.utils.isNull(this.username)){
 						this.showPopuTitle('用户名不能为空');
 						return;
@@ -152,6 +163,7 @@
 					formData.append('password',this.userpassword);
 					formData.append('email',this.useremail);
 					formData.append('sex',this.usersex);
+					formData.append('userimg',this.userimg)
 					console.log(this.usersex);
 				this.$http.post(this.utils.getUrl() + '/api/user_loginup', formData)
 		      	.then((response) => {
