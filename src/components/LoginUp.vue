@@ -7,7 +7,10 @@
 		<div class="div_uptop" @submit.prevent="submit($event)">
 			<el-input class="select" v-model="username" placeholder="请自定义一个用户名（数字和英文的组合，不少于六位）">
 			</el-input>
-			<input type="file" name="pclogo" @change="addUserImg($event)" ref='box' accept="image/*">
+			<div class="img_input_div">
+				<el-input class="select" v-model="uimgsrc"  @focus="showFileDialog" id="userimg" ref='uimg' type="text" placeholder="上传自定义头像"/>
+	            <input class="file" type="file"  @change="addUserImg($event)" ref='box' accept="image/*"/>
+			</div>
 			</input>
 			<el-input class="select" v-model="useremail" placeholder="请输入邮箱"></el-input>
 			<el-select class="select" v-model="usersex" placeholder="请选择性别">
@@ -80,6 +83,7 @@
 				popupVisible: false,
 				popupTitle:'',
 				showP: false,
+				showDialog: false,
 				sexs: [
 					{
 					 value: '男',
@@ -90,8 +94,9 @@
 					},
 				],
 				userimg: '',
+				uimgsrc: '',
 			}
-		},
+		}, 
 		components:{
 	
 		},
@@ -110,14 +115,14 @@
 			addUserImg(event){	
 				var files = this.$refs.box.files;
 				if (files.length >= 1){
-			       this.userimg = files[0]
+				   this.userimg = files[0];
+				   this.uimgsrc = this.userimg.name;
+				   console.log(this.userimg.name);
 				}
 			},
 			submit:function(event){
 				event.preventDefault();
 				let formData = new FormData();
-					console.log(this.userimg);
-					return;
 					if(this.utils.isNull(this.username)){
 						this.showPopuTitle('用户名不能为空');
 						return;
@@ -163,8 +168,8 @@
 					formData.append('password',this.userpassword);
 					formData.append('email',this.useremail);
 					formData.append('sex',this.usersex);
-					formData.append('userimg',this.userimg)
-					console.log(this.usersex);
+					formData.append('userimage',this.userimg, this.userimg.name);
+					console.log(this.userimg);
 				this.$http.post(this.utils.getUrl() + '/api/user_loginup', formData)
 		      	.then((response) => {
 					  var res = JSON.parse(response.bodyText)
@@ -187,6 +192,11 @@
 					   this.popupTitle = '注册失败';
 		            }
 		      	)
+			},
+			showFileDialog: function(){
+				this.showDialog = true;
+				this.$refs.uimg.blur();
+				this.$refs.box.click();
 			},
 			showToast: function(title){
 				Toast(title);
@@ -239,6 +249,7 @@
 	}
 	.div_uptop{
 		margin-top: 20px;
+		width: 100%;
 	}
 	.h_title{
 		margin: 0;
@@ -246,6 +257,25 @@
 		font-family: 'Courier New', Courier, monospace;
 		font-size: 15px;
 		padding-left: 15px;
-		color:  #F44336;;
+		color:  #F44336;
 	}
+	.img_input_div{
+		width: 100%;
+		display: flex;
+		float: left;
+	}
+	.file {
+		background: #ffffff;
+		border: 1px solid rgb(216, 215, 218);
+		border-radius: 4px;
+		padding: 4px 12px;
+		overflow: hidden;
+		color: #1E88C7;
+		width: 100%;
+		height: 30px;
+		margin: 0 auto;
+		margin-top: 3px;
+		display: none;
+	}
+		
 </style>
