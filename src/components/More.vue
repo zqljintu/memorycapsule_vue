@@ -4,9 +4,14 @@
 			<div class="div_userinfo">
 				<div class="div_mtop">
 					<div class="div_head">
-						<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
-						<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
-						<img class="user_headimg" v-else src="../assets/user_man.png">
+						<div v-if = "userimg == ''">
+							<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
+							<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
+							<img class="user_headimg" v-else src="../assets/user_man.png">
+						</div>
+						<div v-else>
+							<el-avatar class="user_headimg" shape="circle" :size="50" :fit= "scaletype" :src="getUserImg()"></el-avatar>
+						</div>
 					</div>
 					<div class="div_name">
 						<h4 class="h_username" @click="editNickname">{{usernickname}}</h4>
@@ -78,10 +83,12 @@ import { timeout } from 'q';
 				usersex: '',
 				usernickname: '昵称',
 				usertitle: '个性签名',
+				userimg: '',
 				userpassword:'',
 				showP: false,
 				popupVisible: false,
 				popupTitle:'',
+				scaletype : 'cover',
 				closeTime: timeout,
 			}
 		},
@@ -129,7 +136,7 @@ import { timeout } from 'q';
 			     	  console.log(res)
 					  if(res['code'] == 203){
 							this.showPopuTitle('登录成功');
-							this.setCapsuleCookie(this.username,res['token'],res['sex'],res['nickname'],res['usertitle']);
+							this.setCapsuleCookie(this.username,res['token'],res['sex'],res['nickname'],res['usertitle'],res['userimage']);
 							this.setUpdate(true, this.username);
 					  }else if(res['code'] == 202){
 						  	this.showPopuTitle('该账号尚未注册');
@@ -147,16 +154,18 @@ import { timeout } from 'q';
 				this.popupTitle = title;
 				this.closePopup();
 			},
-			setCapsuleCookie: function(name,token,sex,nickanme,usertitle){
+			setCapsuleCookie: function(name,token,sex,nickanme,usertitle,userimg){
 				this.usersex = sex;
 				this.username= name;
 				this.usernickname = nickanme;
 				this.usertitle = usertitle;
+				this.userimg = userimg;
 				this.$cookies.set('capsule_username',name,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
 				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
 				this.$cookies.set('capsule_nickname',nickanme, 60 *60 *24 *15);
 				this.$cookies.set('capsule_usertitle',usertitle, 60 *60 *24 *15);
+				this.$cookies.set('capsule_userimg',userimg, 60 *60 *24 *15);
 			},
 			clearCapsuleCookie:function(){
 				this.$cookies.remove('capsule_username');
@@ -164,6 +173,7 @@ import { timeout } from 'q';
 				this.$cookies.remove('capsule_usersex');
 				this.$cookies.remove('capsule_nickname');
 				this.$cookies.remove('capsule_usertitle');
+				this.$cookies.remove('capsule_userimg');
 				console.log('zzzzzz','out');
 			},
 			clearInputString:function(){
@@ -291,6 +301,9 @@ import { timeout } from 'q';
 			close: function(){
 				this.popupVisible = false;
 				window.clearTimeout(this.closeTime);
+			},
+			getUserImg: function(){
+		       return this.utils.getUrl() + "/static"+ this.userimg;
 			}
 
 		},
@@ -301,7 +314,8 @@ import { timeout } from 'q';
 					this.usertitle = this.$cookies.get('capsule_usertitle');
 					this.usersex = this.$cookies.get('capsule_usersex');
 					this.username = this.$cookies.get('capsule_username');
-					console.log('zzzzzzzzzzzzMore',"登录了");
+					this.userimg = this.$cookies.get('capsule_userimg');
+					console.log('zzzzzzzzzzzzMore', "登录了");
 				}
 	    },
 	    computed:{
@@ -417,7 +431,7 @@ import { timeout } from 'q';
 		bottom: 0;
 		width: 50px;
 		height: 50px;
-		//background: #125658;
+		background: rgba(94, 213, 209, 0.39);
 	}
 	.div_name{
 		//display: flex;
