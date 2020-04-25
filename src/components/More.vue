@@ -303,6 +303,9 @@ import { timeout } from 'q';
 				window.clearTimeout(this.closeTime);
 			},
 			getUserImg: function(){
+				if (this.userimg == null || this.userimg == ''){
+					return
+				}
 		       return this.utils.getUrl() + "/static"+ this.userimg;
 			}
 

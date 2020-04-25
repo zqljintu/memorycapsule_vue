@@ -176,7 +176,7 @@
 			     	  console.log(res)
 					  if(res['code'] == 0){
 							this.showPopuTitle('注册成功');
-							this.setCapsuleCookie(this.username,res['token'],res['sex'],res['nickname'],res['usertitle']);
+							this.setCapsuleCookie(this.username,res['token'],res['sex'],res['nickname'],res['usertitle'],res['userimage']);
 							//this.$emit('updateCapsules',this.update);
 							/**
 							 * 全局广播，告诉其他组件已经注册成功了
@@ -205,12 +205,13 @@
 				this.popupVisible = true;
 				this.popupTitle = title;
 			},
-			setCapsuleCookie: function(name,token,sex,nickanme,usertitle){
+			setCapsuleCookie: function(name,token,sex,nickanme,usertitle,userimg){
 				this.$cookies.set('capsule_username',name,60 * 60 *60 *24 *15);
 				this.$cookies.set('capsule_token',token, 60 *60 *24 *15);
 				this.$cookies.set('capsule_usersex',sex, 60 *60 *24 *15);
 				this.$cookies.set('capsule_nickname',nickanme, 60 *60 *24 *15);
 				this.$cookies.set('capsule_usertitle',usertitle, 60 *60 *24 *15);
+			    this.$cookies.set('capsule_userimg',userimg, 60 *60 *24 *15);
 			},
 		},
 		mounted:function(){		
