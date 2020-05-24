@@ -5,6 +5,8 @@ This is a web client for memorycapsule developed with Vue.//这是一个用Vue�
 
 > A Vue.js project
 
+相关链接：http://106.12.163.108/
+
 ## Build Setup
 
 ``` bash
