@@ -60,6 +60,9 @@
 		},
 		methods:{
 			showCapsules () {
+				this.currentPage = 0;
+				this.allPages = 1;
+				this.canload = true;
 				this.isloadtop = true;
 				this.loadCapsuleList();
 			},
@@ -150,6 +153,7 @@
 	    watch: {
 			shouldUpdate() {
 				if (this.$store.getters.getIsLogin){
+					console.log("zzzzzzzzz该请求数据了")
 					this.showCapsules();
 				} else{
 					this.capsules = [];
