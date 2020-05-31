@@ -272,7 +272,7 @@ import { timeout } from 'q';
 							}
 					},
 					(response) => {
-						this.showPopuTitle('注销账号失败');
+						this.showPopuTitle('修改昵称失败');
 					})
 
 				}else if(type == 1){
@@ -289,7 +289,7 @@ import { timeout } from 'q';
 							}
 					},
 					(response) => {
-						this.showPopuTitle('注销账号失败');
+						this.showPopuTitle('修改个人签名失败');
 					})
 				}
 			},
