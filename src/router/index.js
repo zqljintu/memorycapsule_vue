@@ -8,6 +8,7 @@ import Add from '@/components/Add'
 import LoginUp from '@/components/LoginUp'
 import Edit from '@/components/Edit'
 import ItemDetail from '@/components/Item_Detail'
+import Resume from '@/components/Resume'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ export default new Router({
       name: 'ItemDetail',
       path: '/ItemDetail',
       component: ItemDetail
-    }
+    },
+    {
+      name: 'Resume',
+      path: '/Resume',
+      component: Resume
+    },
   ]
 })

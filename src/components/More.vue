@@ -3,15 +3,9 @@
 		<div v-if="islogin">
 			<div class="div_userinfo">
 				<div class="div_mtop">
-					<div class="div_head">
-						<div v-if = "userimg == ''">
-							<img class="user_headimg" v-if="usersex == '男'" src="../assets/user_man.png">
-							<img class="user_headimg" v-else-if="usersex == '女'" src="../assets/user_woman.png">
-							<img class="user_headimg" v-else src="../assets/user_man.png">
-						</div>
-						<div v-else>
-							<el-avatar class="user_headimg" shape="circle" :size="50" :fit= "scaletype" :src="getUserImg()"></el-avatar>
-						</div>
+					<div class="div_head"  @click="editUserimg">
+						<el-avatar class="user_headimg" shape="circle" :size="50" :fit= "scaletype" :src="getUserImg()" v-model="userimg" ></el-avatar>
+						 <input class="file" type="file"  @change="addUserImg($event)" ref='box' accept="image/*"/>
 					</div>
 					<div class="div_name">
 						<h4 class="h_username" @click="editNickname">{{usernickname}}</h4>
@@ -84,11 +78,12 @@ import { timeout } from 'q';
 				usernickname: '昵称',
 				usertitle: '个性签名',
 				userimg: '',
+				uimgsrc: '',
 				userpassword:'',
 				showP: false,
 				popupVisible: false,
 				popupTitle:'',
-				scaletype : 'cover',
+				scaletype : 'fill',
 				closeTime: timeout,
 			}
 		},
@@ -291,6 +286,22 @@ import { timeout } from 'q';
 					(response) => {
 						this.showPopuTitle('修改个人签名失败');
 					})
+				}else if(type == 2){
+					form.append('userimage',this.uimgsrc, this.uimgsrc.name);
+					this.$http.post(this.utils.getUrl() + '/api/edit_userimg', form)
+					.then((response) => {
+							var res = JSON.parse(response.bodyText)
+							console.log(res)
+							if(res['code'] == 225){
+								this.userimg = res['userimage']
+								this.$cookies.set('capsule_userimg',this.userimg, 60 *60 *24 *15);
+							}else {
+
+							}
+					},
+					(response) => {
+						this.showPopuTitle('修改个人签名失败');
+					})
 				}
 			},
 			closePopup: function(){
@@ -302,9 +313,24 @@ import { timeout } from 'q';
 				this.popupVisible = false;
 				window.clearTimeout(this.closeTime);
 			},
+			editUserimg:function(){
+				this.$refs.box.click();
+			},
+			addUserImg(event){	
+				var files = this.$refs.box.files;
+				if (files.length >= 1){
+				   this.uimgsrc = files[0];
+				   this.postUserInfo(2,"")
+				   console.log(this.uimgsrc.name);
+				}
+			},
 			getUserImg: function(){
 				if (this.userimg == null || this.userimg == ''){
-					return
+					if (usersex == '男'){
+						return "../assets/user_man.png";
+					}else{
+						return "../assets/user_woman.png";
+					}
 				}
 		       return this.utils.getUrl() + "/static"+ this.userimg;
 			}
@@ -432,8 +458,8 @@ import { timeout } from 'q';
 		margin: auto;
 		top: 0;
 		bottom: 0;
-		width: 50px;
-		height: 50px;
+		width: 0px;
+		height: 0px;
 		background: rgba(94, 213, 209, 0.39);
 	}
 	.div_name{
@@ -482,6 +508,19 @@ import { timeout } from 'q';
 		margin-bottom: 80px;
 		font-size: 8px;
 		color: #615f5f;
+	}
+	.file {
+		background: #ffffff;
+		border: 1px solid rgb(216, 215, 218);
+		border-radius: 4px;
+		padding: 4px 12px;
+		overflow: hidden;
+		color: #1E88C7;
+		width: 100%;
+		height: 30px;
+		margin: 0 auto;
+		margin-top: 3px;
+		display: none;
 	}
 	
 </style>
