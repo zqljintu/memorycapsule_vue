@@ -326,7 +326,7 @@ import { timeout } from 'q';
 			},
 			getUserImg: function(){
 				if (this.userimg == null || this.userimg == ''){
-					if (usersex == '男'){
+					if (this.usersex == '男'){
 						return "../assets/user_man.png";
 					}else{
 						return "../assets/user_woman.png";
