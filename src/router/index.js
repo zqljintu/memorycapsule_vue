@@ -9,6 +9,9 @@ import LoginUp from '@/components/LoginUp'
 import Edit from '@/components/Edit'
 import ItemDetail from '@/components/Item_Detail'
 import Resume from '@/components/Resume'
+import Manager from '@/components/Manager'
+import ManageMain from '@/components/ManageMain'
+import ManageLogin from '@/components/ManageLogin'
 
 Vue.use(Router)
 
@@ -62,6 +65,16 @@ export default new Router({
       name: 'Resume',
       path: '/Resume',
       component: Resume
+    },
+    {
+      name: 'Manager',
+      path: '/Manager',
+      component: Manager
+    },
+    {
+      name: 'ManageMain',
+      path: '/ManageMain',
+      component: ManageMain
     },
   ]
 })
